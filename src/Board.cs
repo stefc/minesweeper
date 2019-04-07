@@ -49,9 +49,6 @@ namespace minesweeper {
 			.SelectMany( y => Enumerable.Range(0, Width )
 				.Select( x => new Point(x,y)) );
 
-        internal bool HasBomb(Point point)
-        {
-            throw new NotImplementedException();
-        }
+        internal bool HasBomb(Point point) => Mines.Contains(point);
     }
 }
