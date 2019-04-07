@@ -16,6 +16,18 @@ namespace minesweeper.tests
 			Assert.Equal(9, allFields.Count());
 			Assert.Equal(0, board.Mines.Count());
 			Assert.True(allFields.All( point => !board.HasBomb(point)));
+        
+		}
+        [Fact]
+        public void FullBoard()
+        {
+			var board = BoardFactory.CreateBoard(height: 3, width: 3, mines: 9);
+
+			var allFields = board.AllFields;
+
+			Assert.Equal(9, allFields.Count());
+			Assert.Equal(9, board.Mines.Count());
+			Assert.True(allFields.All( point => board.HasBomb(point)));
         }
     }
 }
