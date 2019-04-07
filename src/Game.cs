@@ -41,25 +41,19 @@ namespace minesweeper
 			}
         }
 
+		// https://de.wikipedia.org/wiki/Floodfill#Iterative_Flutfüllung
 		private void FloodFill(Point startpoint) {
 			var stack = ImmutableStack<Point>.Empty.Push(startpoint);
 
 			while (!stack.IsEmpty) {
 				stack = stack.Pop(out var point);
 
-				if (!this.checkedFields.Contains(point) && this.board.AllFields.Contains(point)) 
+				if (!this.checkedFields.Contains(point) && this.board.IsValid(point)) 
 				{
 					this.checkedFields = this.checkedFields.Add(point); 
 
-					stack = stack
-						.Push(new Point(point.X-1, point.Y-1))
-						.Push(new Point(point.X, point.Y-1))
-						.Push(new Point(point.X+1, point.Y-1))
-						.Push(new Point(point.X-1, point.Y))
-						.Push(new Point(point.X+1, point.Y))
-						.Push(new Point(point.X-1, point.Y+1))
-						.Push(new Point(point.X, point.Y+1))
-						.Push(new Point(point.X+1, point.Y+1));
+					stack = point.GetNeighborhood()
+						.Aggregate(stack, (accu, current) => accu.Push(current));
 				}
 			}
 		}

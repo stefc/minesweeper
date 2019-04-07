@@ -39,21 +39,14 @@ namespace minesweeper
             return Mines.Intersect(GetNeighbarhood(point)).Count();
         }
 
-		private IEnumerable<Point> GetPossibleNeighbarhood(Point point) { 
-			yield return new Point(point.X-1, point.Y-1);
-			yield return new Point(point.X,   point.Y-1);
-			yield return new Point(point.X+1, point.Y-1);
-			yield return new Point(point.X-1, point.Y);
-			yield return new Point(point.X+1, point.Y);
-			yield return new Point(point.X-1, point.Y+1);
-			yield return new Point(point.X,   point.Y+1);
-			yield return new Point(point.X+1, point.Y+1);
-		}
+		
 
-		private IEnumerable<Point> GetNeighbarhood(Point point) { 
-			return AllFields.Intersect(GetPossibleNeighbarhood(point));
+		internal IEnumerable<Point> GetNeighbarhood(Point point) { 
+			return AllFields.Intersect(point.GetNeighborhood());
 		}
 
         internal bool HasBomb(Point point) => Mines.Contains(point);
+
+		internal bool IsValid(Point point) => AllFields.Contains(point);
     }
 }

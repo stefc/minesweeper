@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using minesweeper.common;
 
@@ -19,5 +20,16 @@ namespace minesweeper
 			yield return this.X;
 			yield return this.Y;
 		}
-	}
+
+		public IEnumerable<Point> GetNeighborhood() { 
+			yield return new Point(X-1, Y-1);
+			yield return new Point(X,   Y-1);
+			yield return new Point(X+1, Y-1);
+			yield return new Point(X-1, Y);
+			yield return new Point(X+1, Y);
+			yield return new Point(X-1, Y+1);
+			yield return new Point(X,   Y+1);
+			yield return new Point(X+1, Y+1);
+		}
+    }
 }
