@@ -49,6 +49,27 @@ namespace minesweeper {
 			.SelectMany( y => Enumerable.Range(0, Width )
 				.Select( x => new Point(x,y)) );
 
+        internal int CountBombs(Point point)
+        {
+            return Mines.Intersect(GetNeighbarhood(point)).Count();
+        }
+
+		private IEnumerable<Point> GetPossibleNeighbarhood(Point point) { 
+			yield return new Point(point.X-1, point.Y-1);
+			yield return new Point(point.X,   point.Y-1);
+			yield return new Point(point.X+1, point.Y-1);
+			yield return new Point(point.X-1, point.Y);
+			yield return new Point(point.X,   point.Y);
+			yield return new Point(point.X+1, point.Y);
+			yield return new Point(point.X-1, point.Y+1);
+			yield return new Point(point.X,   point.Y+1);
+			yield return new Point(point.X+1, point.Y+1);
+		}
+
+		private IEnumerable<Point> GetNeighbarhood(Point point) { 
+			return AllFields.Intersect(GetPossibleNeighbarhood(point));
+		}
+
         internal bool HasBomb(Point point) => Mines.Contains(point);
     }
 }

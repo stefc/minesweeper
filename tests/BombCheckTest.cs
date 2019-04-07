@@ -18,6 +18,7 @@ namespace minesweeper.tests
 			Assert.True(allFields.All( point => !board.HasBomb(point)));
         
 		}
+
         [Fact]
         public void FullBoard()
         {
@@ -28,6 +29,16 @@ namespace minesweeper.tests
 			Assert.Equal(9, allFields.Count());
 			Assert.Equal(9, board.Mines.Count());
 			Assert.True(allFields.All( point => board.HasBomb(point)));
+        }
+
+        [Fact]
+        public void CountBombsInNeighbarhood()
+        {
+			var board = BoardFactory.CreateBoard(height: 3, width: 3, mines: 9);
+			Assert.Equal(4*3+4*5+1*8, 
+				board.AllFields
+					.Select( point => board.CountBombs(point))
+					.Sum());
         }
     }
 }
