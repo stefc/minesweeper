@@ -25,11 +25,14 @@ namespace minesweeper
 			}
 		}
 
-        public IEnumerable<Point> Mines => this.mines;
+        public ISet<Point> Mines => this.mines;
 
-		public IEnumerable<Point> AllFields => Enumerable.Range(0, Height)
+		public ISet<Point> FreeFields => AllFields.Except(Mines).ToImmutableHashSet();
+
+		public ISet<Point> AllFields => Enumerable.Range(0, Height)
 			.SelectMany( y => Enumerable.Range(0, Width )
-				.Select( x => new Point(x,y)) );
+				.Select( x => new Point(x,y)) )
+			.ToImmutableHashSet();
 
         internal int CountBombs(Point point)
         {

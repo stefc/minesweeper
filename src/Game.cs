@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Immutable;
+using System.Linq;
 using minesweeper.contracts;
 
 namespace minesweeper
@@ -9,14 +11,20 @@ namespace minesweeper
         private readonly IDateProvider dateProvider;
         private bool isRunning;
 
+		private int score;
+
+		private  ImmutableHashSet<Point> checkedFields;
+
         public Game(Board board, IDateProvider dateProvider)
         {
             this.board = board;
 			this.dateProvider = dateProvider;
 			this.isRunning = true;
+			this.score = 0;
+			this.checkedFields = ImmutableHashSet<Point>.Empty;
         }
 
-		public int Score => 0;
+		public int Score => this.score;
 
 		public bool IsRunning => this.isRunning;
 
@@ -24,6 +32,13 @@ namespace minesweeper
         {
             if (board.HasBomb(point))
 				this.isRunning = false; 
+			else {
+				if (!this.checkedFields.Contains(point)) {
+					this.checkedFields = this.checkedFields.Add(point);
+					this.score+= 1;
+					this.isRunning = this.board.FreeFields.Except(this.checkedFields).Count() > 0;  
+				}
+			}
         }
     }
 }
