@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using minesweeper.common;
 
 namespace minesweeper {
@@ -43,5 +44,9 @@ namespace minesweeper {
 		}
 
         public IEnumerable<Point> Mines => this.mines;
+
+		public IEnumerable<Point> AllFields => Enumerable.Range(0, Height)
+			.SelectMany( y => Enumerable.Range(0, Width )
+				.Select( x => new Point(x,y)) );
     }
 }
