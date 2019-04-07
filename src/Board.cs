@@ -59,7 +59,6 @@ namespace minesweeper {
 			yield return new Point(point.X,   point.Y-1);
 			yield return new Point(point.X+1, point.Y-1);
 			yield return new Point(point.X-1, point.Y);
-			yield return new Point(point.X,   point.Y);
 			yield return new Point(point.X+1, point.Y);
 			yield return new Point(point.X-1, point.Y+1);
 			yield return new Point(point.X,   point.Y+1);
