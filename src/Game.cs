@@ -34,11 +34,34 @@ namespace minesweeper
 				this.isRunning = false; 
 			else {
 				if (!this.checkedFields.Contains(point)) {
-					this.checkedFields = this.checkedFields.Add(point);
+					FloodFill(point);
 					this.score+= 1;
 					this.isRunning = this.board.FreeFields.Except(this.checkedFields).Count() > 0;  
 				}
 			}
         }
+
+		private void FloodFill(Point startpoint) {
+			var stack = ImmutableStack<Point>.Empty.Push(startpoint);
+
+			while (!stack.IsEmpty) {
+				stack = stack.Pop(out var point);
+
+				if (!this.checkedFields.Contains(point) && this.board.AllFields.Contains(point)) 
+				{
+					this.checkedFields = this.checkedFields.Add(point); 
+
+					stack = stack
+						.Push(new Point(point.X-1, point.Y-1))
+						.Push(new Point(point.X, point.Y-1))
+						.Push(new Point(point.X+1, point.Y-1))
+						.Push(new Point(point.X-1, point.Y))
+						.Push(new Point(point.X+1, point.Y))
+						.Push(new Point(point.X-1, point.Y+1))
+						.Push(new Point(point.X, point.Y+1))
+						.Push(new Point(point.X+1, point.Y+1));
+				}
+			}
+		}
     }
 }

@@ -48,6 +48,22 @@ namespace minesweeper.tests
 			Assert.False(game.IsRunning); 
 			Assert.True(game.Score > 0);
 		}		
+
+		[Fact]
+        public void WinGameWithOneGuess()
+        {
+			var board = BoardFactory.CreateBoard(height: 3, width: 3, mines: 0);
+
+			var game = new Game(board, new GameDateProvider(new DateTime(2000,1,1,13,00,00)));
+			
+			Assert.Equal(0, game.Score);
+			Assert.True(game.IsRunning); 
+
+			game.Play(new Point(1,1));
+			
+			Assert.False(game.IsRunning); 
+			Assert.True(game.Score > 0);
+		}		
     }
 
 
