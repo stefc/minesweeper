@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using minesweeper.common;
@@ -34,6 +35,11 @@ namespace minesweeper {
 			this.Height = height;
 
 			this.mines = ImmutableHashSet<Point>.Empty;
+
+			Random rnd = new Random();
+			while (this.mines.Count < mines) {
+				this.mines = this.mines.Add(new Point(x: rnd.Next(width), y: rnd.Next(height)));
+			}
 		}
 
         public IEnumerable<Point> Mines => this.mines;
